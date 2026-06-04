@@ -3,17 +3,15 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "mazegen-team"
+name = "mazegen"
 version = "1.0.0"
-description = "Znovupoužitelný modul pro generování bludiště (42 projekt)"
+description = "Reusable maze generator module for A_Maze_ing project."
 readme = "mazegen_package/README.md"
-requires-python = ">=3.10"
-authors = [
-    { name = "Svitlana" }
-]
+requires-python = ">=3.13.1"
+
 classifiers = [
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.13.1",
 ]
 
 [tool.setuptools.packages.find]

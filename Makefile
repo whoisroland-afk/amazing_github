@@ -19,13 +19,13 @@ debug:
 
 .PHONY: lint
 lint:
-	$(VENV_BIN)/flake8 .
-	$(VENV_BIN)/mypy --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs .
+	$(VENV_BIN)/flake8 . --exclude=.venv,venv
+	$(VENV_BIN)/mypy --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs . --exclude "(venv|\.venv)"
 
 .PHONY: lint-strict
 lint-strict:
-	$(VENV_BIN)/flake8 .
-	$(VENV_BIN)/mypy --strict .
+	$(VENV_BIN)/flake8 . --exclude=.venv,venv
+	$(VENV_BIN)/mypy --strict --ignore-missing-imports . --exclude "(venv|\.venv)"
 
 .PHONY: build
 build:
@@ -34,8 +34,11 @@ build:
 .PHONY: clean
 clean:
 	rm -rf __pycache__
+	rm -rf mazegen_package/__pycache__
 	rm -rf .mypy_cache
 	rm -rf .pytest_cache
 	rm -rf build/
 	rm -rf dist/
 	rm -rf *.egg-info
+	rm -rf venv/
+	rm -rf .venv/
