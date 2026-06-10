@@ -1,7 +1,7 @@
 VENV_BIN = .venv/bin
 
 .PHONY: all
-all: lint run
+all: install
 
 .PHONY: install
 install:
@@ -11,6 +11,7 @@ install:
 
 .PHONY: run
 run:
+	@if [ ! -d ".venv" ]; then make install; fi
 	$(VENV_BIN)/python a_maze_ing.py config.txt
 
 .PHONY: debug
@@ -19,6 +20,7 @@ debug:
 
 .PHONY: lint
 lint:
+	@if [ ! -d ".venv" ]; then $(MAKE) install; fi
 	$(VENV_BIN)/flake8 . --exclude=.venv,venv
 	$(VENV_BIN)/mypy --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs . --exclude "(venv|\.venv)"
 
@@ -40,5 +42,13 @@ clean:
 	rm -rf build/
 	rm -rf dist/
 	rm -rf *.egg-info
-	rm -rf venv/
-	rm -rf .venv/
+	rm -f *.whl
+	rm -f *.tar.gz
+
+.PHONY: fclean
+fclean: clean
+	rm -rf .venv
+	rm -f maze.txt  
+
+.PHONY: re
+re: fclean all

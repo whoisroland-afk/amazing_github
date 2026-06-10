@@ -6,8 +6,8 @@ build-backend = "setuptools.build_meta"
 name = "mazegen"
 version = "1.0.0"
 description = "Reusable maze generator module for A_Maze_ing project."
-readme = "mazegen_package/README.md"
-requires-python = ">=3.13.1"
+readme = "README.md"
+requires-python = ">=3.13"
 
 classifiers = [
     "Programming Language :: Python :: 3",

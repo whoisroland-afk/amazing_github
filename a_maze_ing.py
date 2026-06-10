@@ -2,7 +2,7 @@
 
 import sys
 from typing import Final
-from mazegen_package.mazegen import MazeGenerator
+from mazegen_package import MazeGenerator
 
 ConfigDict = dict[str, str]
 
@@ -60,7 +60,7 @@ def parse_config(file_path: str) -> ConfigDict | None:
                     return None
 
                 key, val = clean_line.split("=", 1)
-                config[key.strip()] = val.strip()
+                config[key.strip().upper()] = val.strip()
 
         for key in MANDATORY_KEYS:
             if key not in config:
@@ -395,7 +395,15 @@ def main() -> int:
         entry = (int(entry_str[0]), int(entry_str[1]))
         exit_coords = (int(exit_str[0]), int(exit_str[1]))
 
-        perfect = raw_config["PERFECT"].lower() == "true"
+        perfect_val = raw_config["PERFECT"].lower()
+        if perfect_val not in ("true", "false"):
+            print(
+                f"Error: Invalid boolean value '{raw_config['PERFECT']}' "
+                f"for key 'PERFECT'. Must be 'True' or 'False'.",
+                file=sys.stderr
+            )
+            return 1
+        perfect = perfect_val == "true"
         output_file = raw_config["OUTPUT_FILE"]
 
         if width < 10 or height < 7:
